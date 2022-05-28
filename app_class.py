@@ -72,6 +72,9 @@ class App:
         for x in range(HEIGHT//self.cell_height):
             pygame.draw.line(self.background, GREY, (0, x*self.cell_height), (WIDTH, x*self.cell_height))
 
+        for wall in self.walls:
+            pygame.draw.rect(self.background, RED, (wall.x * self.cell_width, wall.y * self.cell_height, self.cell_width, self.cell_height))
+
 
 ######### START FUNCTIONS #########
 
@@ -120,7 +123,7 @@ class App:
     def playing_draw(self):
         self.screen.fill(BLACK)
         self.screen.blit(self.background, (TOP_BOTTOM_MARGIN//2, TOP_BOTTOM_MARGIN//2))
-        self.draw_grid()
+        # self.draw_grid()
         self.draw_text(f"CURRENT SCORE: {0}", [60, 0], 18, WHITE, START_FONT)
         self.draw_text(f"HIGH SCORE: {0}", [WIDTH//2+60, 0], 18, WHITE, START_FONT)
         self.player.draw()

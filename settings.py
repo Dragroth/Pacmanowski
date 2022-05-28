@@ -29,6 +29,6 @@ START_FONT = 'arial black'
 
 # player settings 
 
-PLAYER_START_POS = vec(1,10)
+PLAYER_START_POS = vec(1,2)
 
 # enemy settings
