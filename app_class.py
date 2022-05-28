@@ -18,6 +18,7 @@ class App:
         self.cell_height = MAZE_HEIGHT//30
 
         self.player = Player(self, PLAYER_START_POS)
+        self.walls = []
 
 
         self.load()
@@ -54,6 +55,15 @@ class App:
     def load(self):
         self.background = pygame.image.load('/home/gkk/Documents/Python/Pacmanowski/maze.png')
         self.background = pygame.transform.scale(self.background, (MAZE_WIDTH, MAZE_HEIGHT))
+
+        # Opening walls file and creating collision map
+        with open("/home/gkk/Documents/Python/Pacmanowski/walls.txt", "r") as file:
+            for yidx, line in enumerate(file):
+                for xidx, char in enumerate(line):
+                    if char == "1":
+                        self.walls.append(vec(xidx, yidx))
+
+        
 
     def draw_grid(self):
         for x in range(WIDTH//self.cell_width):
@@ -94,13 +104,13 @@ class App:
                 self.running = False
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_LEFT:
-                    self.player.move(vec(-1,0))
+                    self.player.move(vec(-STEP,0))
                 if event.key == pygame.K_RIGHT:
-                    self.player.move(vec(1,0))
+                    self.player.move(vec(STEP,0))
                 if event.key == pygame.K_UP:
-                    self.player.move(vec(0,-1))
+                    self.player.move(vec(0,-STEP))
                 if event.key == pygame.K_DOWN:
-                    self.player.move(vec(0,1))
+                    self.player.move(vec(0,STEP))
 
 
     def playing_update(self):
