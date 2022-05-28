@@ -19,6 +19,12 @@ class App:
                 self.start_events()
                 self.start_update()
                 self.start_draw()
+            elif self.state == "playing":
+                self.playing_events()
+                self.playing_update()
+                self.playing_draw()
+            else:
+                self.running = False
             self.clock.tick(FPS)
         pygame.quit()
         sys.exit()
@@ -26,13 +32,14 @@ class App:
 
 ######### HELP FUNCTIONS #########
 
-    def draw_text(self, message, screen, pos, size, color, font_name):
+    def draw_text(self, message, pos, size, color, font_name, centered=False):
         font = pygame.font.SysFont(font_name, size)
-        text = font.render(message, False, color)
+        text = font.render(message, True, color)
         text_size = text.get_size()
-        pos[0] = pos[0]-text_size[0]//2
-        pos[1] = pos[1]-text_size[1]//2
-        screen.blit(text, pos)
+        if centered:
+            pos[0] = pos[0]-text_size[0]//2
+            pos[1] = pos[1]-text_size[1]//2
+        self.screen.blit(text, pos)
 
 
 ######### START FUNCTIONS #########
@@ -47,10 +54,28 @@ class App:
     def start_update(self):
         pass
 
-    def start_update(self):
-        pass
 
     def start_draw(self):
         self.screen.fill(BLACK)
-        self.draw_text("PRESS SPACEBAR", self.screen, [WIDTH//2, HEIGHT//2], START_TEXT_SIZE, ORANGE, START_FONT)
+        self.draw_text("PRESS SPACEBAR", [WIDTH//2, HEIGHT//2], START_TEXT_SIZE, ORANGE, START_FONT, True)
+        self.draw_text("GABRIEL KRÓL", [WIDTH//2, HEIGHT//2+60], START_TEXT_SIZE, AQUAMARINE, START_FONT, True)
+        self.draw_text("HIGH SCORE", [4, 4], START_TEXT_SIZE, WHITE, START_FONT)
+        pygame.display.update()
+
+
+
+
+######### PLAYING FUNCTIONS #########
+
+    def playing_events(self):
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                self.running = False
+
+    def playing_update(self):
+        pass
+
+
+    def playing_draw(self):
+        self.screen.fill(RED)
         pygame.display.update()
