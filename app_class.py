@@ -19,6 +19,7 @@ class App:
 
         self.player = Player(self, PLAYER_START_POS)
         self.walls = []
+        self.coins = []
 
 
         self.load()
@@ -62,6 +63,8 @@ class App:
                 for xidx, char in enumerate(line):
                     if char == "1":
                         self.walls.append(vec(xidx, yidx))
+                    elif char == "C":
+                        self.coins.append(vec(xidx, yidx))
 
         
 
@@ -123,8 +126,15 @@ class App:
     def playing_draw(self):
         self.screen.fill(BLACK)
         self.screen.blit(self.background, (TOP_BOTTOM_MARGIN//2, TOP_BOTTOM_MARGIN//2))
-        # self.draw_grid()
+        self.draw_coins()
+        if DEBUG_MODE:
+            self.draw_grid()
         self.draw_text(f"CURRENT SCORE: {0}", [60, 0], 18, WHITE, START_FONT)
         self.draw_text(f"HIGH SCORE: {0}", [WIDTH//2+60, 0], 18, WHITE, START_FONT)
         self.player.draw()
         pygame.display.update()
+
+    def draw_coins(self):
+        for coin in self.coins:
+            # pygame.draw.rect(self.background, RED, (coin.x * self.cell_width, coin.y * self.cell_height, self.cell_width, self.cell_height))
+            pygame.draw.circle(self.screen, WHITE, (int(coin.x * self.cell_width+ self.cell_width//2 + TOP_BOTTOM_MARGIN//2), int(coin.y * self.cell_height  + self.cell_height//2 + TOP_BOTTOM_MARGIN//2)), 5)
