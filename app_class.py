@@ -1,5 +1,6 @@
 import pygame, sys
 from settings import *
+from player_class import *
 
 pygame.init()
 # vector is used to calculate acceleration and other cool stuff
@@ -15,6 +16,8 @@ class App:
         
         self.cell_width = MAZE_WIDTH//28
         self.cell_height = MAZE_HEIGHT//30
+
+        self.player = Player(self, PLAYER_START_POS)
 
 
         self.load()
@@ -100,4 +103,5 @@ class App:
         self.draw_grid()
         self.draw_text(f"CURRENT SCORE: {0}", [60, 0], 18, WHITE, START_FONT)
         self.draw_text(f"HIGH SCORE: {0}", [WIDTH//2+60, 0], 18, WHITE, START_FONT)
+        self.player.draw()
         pygame.display.update()
