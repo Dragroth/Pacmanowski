@@ -38,8 +38,12 @@ class Player:
 
     def on_coin(self):
         if self.grid_pos in self.app.coins:
-            if self.pix_pos:
-                return True
+            if int(self.pix_pos.x+TOP_BOTTOM_MARGIN//2) % self.app.cell_width == 0:
+                if self.direction == vec(STEP,0) or self.direction == vec(-STEP,0):
+                    return True
+            if int(self.pix_pos.y+TOP_BOTTOM_MARGIN//2) % self.app.cell_height == 0:
+                if self.direction == vec(0,STEP) or self.direction == vec(0,-STEP):
+                    return True
         return False
 
     def eat_coin(self):
