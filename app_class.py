@@ -129,7 +129,7 @@ class App:
         self.draw_coins()
         if DEBUG_MODE:
             self.draw_grid()
-        self.draw_text(f"CURRENT SCORE: {0}", [60, 0], 18, WHITE, START_FONT)
+        self.draw_text(f"CURRENT SCORE: {self.player.current_score}", [60, 0], 18, WHITE, START_FONT)
         self.draw_text(f"HIGH SCORE: {0}", [WIDTH//2+60, 0], 18, WHITE, START_FONT)
         self.player.draw()
         pygame.display.update()
