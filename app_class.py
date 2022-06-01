@@ -58,11 +58,11 @@ class App:
         self.screen.blit(text, pos)
 
     def load(self):
-        self.background = pygame.image.load('/home/gkk/Documents/Python/Pacmanowski/maze.png')
+        self.background = pygame.image.load('maze.png')
         self.background = pygame.transform.scale(self.background, (MAZE_WIDTH, MAZE_HEIGHT))
 
         # Opening walls file and creating collision map
-        with open("/home/gkk/Documents/Python/Pacmanowski/walls.txt", "r") as file:
+        with open("walls.txt", "r") as file:
             for yidx, line in enumerate(file):
                 for xidx, char in enumerate(line):
                     if char == "1":
