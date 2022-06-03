@@ -9,10 +9,11 @@ class Enemy:
         self.app = app
         self.grid_pos = pos
         self.pix_pos = self.get_pix_pos()
+        self.starting_pos = [pos.x, pos.y]
         self.radius = self.app.cell_width//2.3
         self.number = number
         self.color = self.set_color()
-        self.direction = vec(1,0)
+        self.direction = vec(0,0)
         self.personality = self.set_personality()
         self.target = None
         self.speed = self.set_speed()
@@ -44,11 +45,11 @@ class Enemy:
         if self.personality == "speedy" or self.personality == "slow":
             return self.app.player.grid_pos
         else:
-            if self.app.player.grid_pos.x > COLS//2 and self.app.player.grid_pos.y > ROWS//2:
+            if self.app.player.grid_pos[0] > COLS//2 and self.app.player.grid_pos[1] > ROWS//2:
                 return vec(1, 1)
-            if self.app.player.grid_pos.x > COLS//2 and self.app.player.grid_pos.y < ROWS//2:
+            if self.app.player.grid_pos[0] > COLS//2 and self.app.player.grid_pos[1] < ROWS//2:
                 return vec(1, ROWS-2)
-            if self.app.player.grid_pos.x < COLS//2 and self.app.player.grid_pos.y > ROWS//2:
+            if self.app.player.grid_pos[0] < COLS//2 and self.app.player.grid_pos[1] > ROWS//2:
                 return vec(COLS-2, 1)
             else:
                 return vec(COLS-2, ROWS-2)
@@ -56,10 +57,10 @@ class Enemy:
     def time_to_move(self):
         """"Checks whether it's okay to change direction, to stay in grid"""
         if int(self.pix_pos.x+TOP_BOTTOM_MARGIN//2) % self.app.cell_width == 0:
-            if self.direction == vec(STEP,0) or self.direction == vec(-STEP,0):
+            if self.direction == vec(STEP,0) or self.direction == vec(-STEP,0) or self.direction == vec(0,0):
                 return True
         if int(self.pix_pos.y+TOP_BOTTOM_MARGIN//2) % self.app.cell_height == 0:
-            if self.direction == vec(0,STEP) or self.direction == vec(0,-STEP):
+            if self.direction == vec(0,STEP) or self.direction == vec(0,-STEP) or self.direction == vec(0,0):
                 return True
         return False
 
@@ -80,7 +81,7 @@ class Enemy:
         return vec(xdir, ydir)
 
     def find_next_cell_in_path(self, target):
-        path = self.BFS([int(self.grid_pos.x), int(self.grid_pos.y)], [int(self.target.x), int(self.target.y)])
+        path = self.BFS([int(self.grid_pos.x), int(self.grid_pos.y)], [int(self.target[0]), int(self.target[1])])
         return path[1]
 
     def BFS(self, start, target):
