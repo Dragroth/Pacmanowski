@@ -8,6 +8,7 @@ from states.game_over import *
 
 pygame.init()
 
+states = {'Menu': Menu, 'Level': Level, 'Game_over': Game_over}
 vector = pygame.math.Vector2
 
 class App:
@@ -23,8 +24,8 @@ class App:
         while self.running:
             # states
             if isinstance(self.state, State):
-                if isinstance(self.state, Game_over) and self.state.replay:
-                    self.state = Menu(self)
+                if self.state.change_state in states:
+                    self.state = states[self.state.change_state](self)
                 self.state.events()
                 self.state.update()
                 self.state.draw()

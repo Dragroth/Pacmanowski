@@ -2,7 +2,6 @@ import pygame
 
 from settings import *
 from states.state import *
-from states.menu import *
 
 class Game_over(State):
     def __init__(self, app):
@@ -14,7 +13,7 @@ class Game_over(State):
             if event.type == pygame.QUIT:
                 self.app.running = False
             if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
-                self.replay = True
+                self.change_state = "Menu"
             if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
                 self.app.running = False
     

@@ -2,7 +2,6 @@ import pygame
 
 from settings import *
 from states.state import *
-from states.level import *
 
 class Menu(State):
     def __init__(self, app):
@@ -13,7 +12,7 @@ class Menu(State):
             if event.type == pygame.QUIT:
                 self.app.running = False
             if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
-                self.app.state = Level(self.app)
+                self.change_state = "Level"
 
     def update(self):
         pass

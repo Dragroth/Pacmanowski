@@ -3,7 +3,6 @@ import pygame
 from entities.enemy import *
 from entities.player import *
 from states.state import *
-from states.game_over import *
 
 
 vector = pygame.math.Vector2
@@ -91,7 +90,7 @@ class Level(State):
     def remove_life(self):
         self.player.lives -= 1
         if self.player.lives == 0:
-            self.app.state = Game_over(self.app)
+            self.change_state = "Game_over"
         else:
             self.player.grid_position = vector(self.player.starting_position)
             self.player.pixel_position = self.player.get_pixel_position()
