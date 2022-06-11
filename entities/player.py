@@ -1,12 +1,12 @@
-from entity import *
+from entities.entity import *
 import pygame
 
 vector = pygame.math.Vector2
 
 class Player(Entity):
     """"A player is a special kind of entity that is controlled and allows collecting points"""
-    def __init__(self, app, init_position):
-        super().__init__(app, init_position)
+    def __init__(self, app, level, init_position):
+        super().__init__(app, level, init_position)
         self.stored_direction = None
         self.stored_stored_direction = None
 
@@ -33,7 +33,7 @@ class Player(Entity):
 
     def draw(self):
         # Drawing player model
-        pygame.draw.circle(self.app.screen, PLAYER_COLOR, (int(self.pixel_position.x), int(self.pixel_position.y)), self.app.cell_width//2-2)
+        pygame.draw.circle(self.app.screen, PLAYER_COLOR, (int(self.pixel_position.x), int(self.pixel_position.y)), CELL_WIDTH//2-2)
 
 
         # Drawing lives
@@ -42,25 +42,25 @@ class Player(Entity):
 
         # Drawing pixel position on a grid map
         if DEBUG_MODE:
-            pygame.draw.rect(self.app.screen, RED, (self.grid_position[0]*self.app.cell_width+TOP_BOTTOM_MARGIN//2, self.grid_position[1] * self.app.cell_height + TOP_BOTTOM_MARGIN//2, self.app.cell_width, self.app.cell_height), 1)
+            pygame.draw.rect(self.app.screen, RED, (self.grid_position[0]*CELL_WIDTH+TOP_BOTTOM_MARGIN//2, self.grid_position[1] * CELL_HEIGHT + TOP_BOTTOM_MARGIN//2, CELL_WIDTH, CELL_HEIGHT), 1)
 
     def on_coin(self):
-        if self.grid_position in self.app.coins:
-            if int(self.pixel_position.x+TOP_BOTTOM_MARGIN//2) % self.app.cell_width == 0:
+        if self.grid_position in self.level.coins:
+            if int(self.pixel_position.x+TOP_BOTTOM_MARGIN//2) % CELL_WIDTH == 0:
                 if self.direction == vector(STEP,0) or self.direction == vector(-STEP,0):
                     return True
-            if int(self.pixel_position.y+TOP_BOTTOM_MARGIN//2) % self.app.cell_height == 0:
+            if int(self.pixel_position.y+TOP_BOTTOM_MARGIN//2) % CELL_HEIGHT == 0:
                 if self.direction == vector(0,STEP) or self.direction == vector(0,-STEP):
                     return True
         return False
 
     def eat_coin(self):
-        self.app.coins.remove(self.grid_position)
+        self.level.coins.remove(self.grid_position)
         self.current_score += 1
 
     def can_move(self, direction):
         """Check if there is wall in the passed direction"""
-        for wall in self.app.walls:
+        for wall in self.level.walls:
             if vector(self.grid_position + direction) == wall:
                 return False
         return True

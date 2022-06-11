@@ -1,12 +1,12 @@
 import pygame, random
-from entity import *
+from entities.entity import *
 
 vector = pygame.math.Vector2
 
 class Enemy(Entity):
-    def  __init__(self, app, init_position, number):
-        super().__init__(app, init_position)
-        self.radius = self.app.cell_width//2.3
+    def  __init__(self, app, level, init_position, number):
+        super().__init__(app, level, init_position)
+        self.radius = CELL_WIDTH//2.3
         self.number = number
         self.color = self.set_color()
         self.personality = self.set_personality()
@@ -34,13 +34,13 @@ class Enemy(Entity):
 
     def set_target(self):
         if self.personality == "speedy" or self.personality == "slow":
-            return self.app.player.grid_position
+            return self.level.player.grid_position
         else:
-            if self.app.player.grid_position[0] > COLS//2 and self.app.player.grid_position[1] > ROWS//2:
+            if self.level.player.grid_position[0] > COLS//2 and self.level.player.grid_position[1] > ROWS//2:
                 return vector(1, 1)
-            if self.app.player.grid_position[0] > COLS//2 and self.app.player.grid_position[1] < ROWS//2:
+            if self.level.player.grid_position[0] > COLS//2 and self.level.player.grid_position[1] < ROWS//2:
                 return vector(1, ROWS-2)
-            if self.app.player.grid_position[0] < COLS//2 and self.app.player.grid_position[1] > ROWS//2:
+            if self.level.player.grid_position[0] < COLS//2 and self.level.player.grid_position[1] > ROWS//2:
                 return vector(COLS-2, 1)
             else:
                 return vector(COLS-2, ROWS-2)
@@ -68,7 +68,7 @@ class Enemy(Entity):
 
     def BFS(self, start, target):
         grid = [[0 for x in range(28)] for x in range(30)]
-        for cell in self.app.walls:
+        for cell in self.level.walls:
             if cell.x < 28 and cell.y < 30:
                 grid[int(cell.y)][int(cell.x)] = 1
         queue = [start]
@@ -110,7 +110,7 @@ class Enemy(Entity):
             else:
                 x_dir, y_dir = 0,-1
             next_pos = vector(self.grid_position.x + x_dir, self.grid_position.y + y_dir)
-            if next_pos not in self.app.walls:
+            if next_pos not in self.level.walls:
                 break
         return vector(x_dir, y_dir)
 
