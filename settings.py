@@ -1,5 +1,3 @@
-from pygame.math import Vector2 as vec
-
 WIDTH, HEIGHT = 610, 670
 TOP_BOTTOM_MARGIN = 50
 MAZE_WIDTH, MAZE_HEIGHT = WIDTH-TOP_BOTTOM_MARGIN, HEIGHT-TOP_BOTTOM_MARGIN
@@ -14,8 +12,7 @@ FPS = 60
 STEP = 1
 DEBUG_MODE = False
 
-
-# colors 
+# Colors 
 BLACK = (0,0,0)
 WHITE = (255,255,255)
 RED = (255,0,0)
@@ -28,13 +25,6 @@ GREY = (105, 105, 105)
 
 PLAYER_COLOR = YELLOW
 
-
-
-# fonts
+# Fonts
 START_TEXT_SIZE = 16
 START_FONT = 'arial black'
-
-# player settings 
-
-
-# enemy settings

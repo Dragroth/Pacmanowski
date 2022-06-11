@@ -8,6 +8,7 @@ from states.game_over import *
 
 pygame.init()
 
+# Used to change states in one place, instead of importing stuff and complicating things
 states = {'Menu': Menu, 'Level': Level, 'Game_over': Game_over}
 vector = pygame.math.Vector2
 
@@ -24,6 +25,7 @@ class App:
         while self.running:
             # states
             if isinstance(self.state, State):
+                # Checks whether we want to change a state
                 if self.state.change_state in states:
                     self.state = states[self.state.change_state](self)
                 self.state.events()

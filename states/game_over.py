@@ -6,7 +6,6 @@ from states.state import *
 class Game_over(State):
     def __init__(self, app):
         super().__init__(app)
-        self.replay = False
 
     def events(self):
         for event in pygame.event.get():
