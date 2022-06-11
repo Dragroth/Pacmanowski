@@ -20,7 +20,7 @@ class Entity(pygame.sprite.Sprite):
         """Gets pixel position based on initial grid position, passed when creating new instance"""
         return vector((self.grid_position.x * self.app.cell_width) + TOP_BOTTOM_MARGIN//2 + self.app.cell_width/2, (self.grid_position.y * self.app.cell_height) + TOP_BOTTOM_MARGIN//2 + self.app.cell_height//2)
 
-    def time_to_move(self):
+    def stay_in_grid(self):
         """"Checks whether it's okay to change direction, to stay in grid"""
         if int(self.pixel_position.x+TOP_BOTTOM_MARGIN//2) % self.app.cell_width == 0:
             if self.direction == vector(1,0) or self.direction == vector(-1,0) or self.direction == vector(0,0):
@@ -28,3 +28,6 @@ class Entity(pygame.sprite.Sprite):
         if int(self.pixel_position.y+TOP_BOTTOM_MARGIN//2) % self.app.cell_height == 0:
             if self.direction == vector(0,1) or self.direction == vector(0,-1) or self.direction == vector(0,0):
                 return True
+
+    def move(self, direction):
+        self.stored_direction = direction

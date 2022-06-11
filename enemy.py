@@ -17,7 +17,7 @@ class Enemy(Entity):
         self.target = self.set_target()
         if  self.target != self.grid_position:
             self.pixel_position += self.direction * self.speed
-            if self.time_to_move():
+            if self.stay_in_grid():
                 self.move()
         
         # Setting grid pos in reference to pix pos
@@ -49,15 +49,6 @@ class Enemy(Entity):
             else:
                 return vector(COLS-2, ROWS-2)
 
-    def time_to_move(self):
-        """"Checks whether it's okay to change direction, to stay in grid"""
-        if int(self.pixel_position.x+TOP_BOTTOM_MARGIN//2) % self.app.cell_width == 0:
-            if self.direction == vector(STEP,0) or self.direction == vector(-STEP,0) or self.direction == vector(0,0):
-                return True
-        if int(self.pixel_position.y+TOP_BOTTOM_MARGIN//2) % self.app.cell_height == 0:
-            if self.direction == vector(0,STEP) or self.direction == vector(0,-STEP) or self.direction == vector(0,0):
-                return True
-        return False
 
     def move(self):
         if self.personality == "random":
