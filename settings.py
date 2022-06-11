@@ -9,7 +9,7 @@ COLS = 28
 
 FPS = 60
 STEP = 1
-DEBUG_MODE = True
+DEBUG_MODE = False
 
 
 # colors 

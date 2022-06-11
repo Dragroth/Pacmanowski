@@ -28,7 +28,9 @@ class App:
 
         self.load()
         self.player = Player(self, vector(self.p_pos))
-        self.make_enemies()
+
+        for idx, pos in enumerate(self.e_pos):
+            self.enemies.append(Enemy(self, vector(pos), idx))
 
     def run(self):
         while self.running:
@@ -82,11 +84,6 @@ class App:
                     elif char == "B":
                         pygame.draw.rect(self.background, BLACK, (xidx*self.cell_width, yidx*self.cell_height, self.cell_width, self.cell_height))
 
-    def make_enemies(self):
-        for idx, pos in enumerate(self.e_pos):
-            self.enemies.append(Enemy(self, vector(pos), idx))
-
-
     def draw_grid(self):
         for x in range(WIDTH//self.cell_width):
             pygame.draw.line(self.background, GREY, (x*self.cell_width, 0), (x*self.cell_width, HEIGHT))
@@ -94,8 +91,8 @@ class App:
         for x in range(HEIGHT//self.cell_height):
             pygame.draw.line(self.background, GREY, (0, x*self.cell_height), (WIDTH, x*self.cell_height))
 
-        for wall in self.walls:
-            pygame.draw.rect(self.background, RED, (wall.x * self.cell_width, wall.y * self.cell_height, self.cell_width, self.cell_height))
+        #for wall in self.walls:
+        #    pygame.draw.rect(self.background, RED, (wall.x * self.cell_width, wall.y * self.cell_height, self.cell_width, self.cell_height))
 
     def reset(self):
         self.player.lives = 3
@@ -146,13 +143,13 @@ class App:
                 self.running = False
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_LEFT:
-                    self.player.move(vector(-STEP,0))
+                    self.player.move(vector(-1,0))
                 if event.key == pygame.K_RIGHT:
-                    self.player.move(vector(STEP,0))
+                    self.player.move(vector(1,0))
                 if event.key == pygame.K_UP:
-                    self.player.move(vector(0,-STEP))
+                    self.player.move(vector(0,-1))
                 if event.key == pygame.K_DOWN:
-                    self.player.move(vector(0,STEP))
+                    self.player.move(vector(0,1))
 
 
     def playing_update(self):
@@ -181,8 +178,7 @@ class App:
         pygame.display.update()
 
     def remove_life(self):
-        pass
-        self.player.lives -= 1
+        # self.player.lives -= 1
         if self.player.lives == 0:
             self.state = "game over"
         else:
@@ -195,7 +191,6 @@ class App:
                 enemy.direction *= 0
 
     def draw_coins(self):
-        pass
         for coin in self.coins:
             pygame.draw.circle(self.screen, WHITE, (int(coin.x * self.cell_width+ self.cell_width//2 + TOP_BOTTOM_MARGIN//2), int(coin.y * self.cell_height  + self.cell_height//2 + TOP_BOTTOM_MARGIN//2)), 5)
 

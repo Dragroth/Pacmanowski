@@ -15,15 +15,11 @@ class Enemy(Entity):
 
     def update(self):
         self.target = self.set_target()
-        if  self.target != self.grid_position:
+        if self.target != self.grid_position:
             self.pixel_position += self.direction * self.speed
             if self.stay_in_grid():
                 self.move()
-        
-        # Setting grid pos in reference to pix pos
-        self.grid_position[0] = (self.pixel_position[0] - TOP_BOTTOM_MARGIN//2)//self.app.cell_width
-        self.grid_position[1] = (self.pixel_position[1] - TOP_BOTTOM_MARGIN//2)//self.app.cell_height
-
+        super().update()
 
     def draw(self):
         pygame.draw.circle(self.app.screen, self.color, (int(self.pixel_position.x), int(self.pixel_position.y)) , self.radius)
