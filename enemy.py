@@ -1,41 +1,36 @@
 import pygame, random
-from settings import *
+from entity import *
 
-vec = pygame.math.Vector2
+vector = pygame.math.Vector2
 
-
-class Enemy:
-    def __init__(self, app, pos, number):
-        self.app = app
-        self.grid_pos = pos
-        self.pix_pos = self.get_pix_pos()
-        self.starting_pos = [pos.x, pos.y]
+class Enemy(Entity):
+    def  __init__(self, app, init_position, number):
+        super().__init__(app, init_position)
         self.radius = self.app.cell_width//2.3
         self.number = number
         self.color = self.set_color()
-        self.direction = vec(0,0)
         self.personality = self.set_personality()
         self.target = None
         self.speed = self.set_speed()
 
     def update(self):
         self.target = self.set_target()
-        if  self.target != self.grid_pos:
-            self.pix_pos += self.direction * self.speed
+        if  self.target != self.grid_position:
+            self.pixel_position += self.direction * self.speed
             if self.time_to_move():
                 self.move()
         
         # Setting grid pos in reference to pix pos
-        self.grid_pos[0] = (self.pix_pos[0] - TOP_BOTTOM_MARGIN//2)//self.app.cell_width
-        self.grid_pos[1] = (self.pix_pos[1] - TOP_BOTTOM_MARGIN//2)//self.app.cell_height
+        self.grid_position[0] = (self.pixel_position[0] - TOP_BOTTOM_MARGIN//2)//self.app.cell_width
+        self.grid_position[1] = (self.pixel_position[1] - TOP_BOTTOM_MARGIN//2)//self.app.cell_height
 
 
     def draw(self):
-        pygame.draw.circle(self.app.screen, self.color, (int(self.pix_pos.x), int(self.pix_pos.y)) , self.radius)
+        pygame.draw.circle(self.app.screen, self.color, (int(self.pixel_position.x), int(self.pixel_position.y)) , self.radius)
 
 
     def set_speed(self):
-        if self.personality in ["speedy", "scared"]:
+        if self.personality in ("speedy", "scared"):
             speed = 2
         else:
             speed = 1
@@ -43,24 +38,24 @@ class Enemy:
 
     def set_target(self):
         if self.personality == "speedy" or self.personality == "slow":
-            return self.app.player.grid_pos
+            return self.app.player.grid_position
         else:
-            if self.app.player.grid_pos[0] > COLS//2 and self.app.player.grid_pos[1] > ROWS//2:
-                return vec(1, 1)
-            if self.app.player.grid_pos[0] > COLS//2 and self.app.player.grid_pos[1] < ROWS//2:
-                return vec(1, ROWS-2)
-            if self.app.player.grid_pos[0] < COLS//2 and self.app.player.grid_pos[1] > ROWS//2:
-                return vec(COLS-2, 1)
+            if self.app.player.grid_position[0] > COLS//2 and self.app.player.grid_position[1] > ROWS//2:
+                return vector(1, 1)
+            if self.app.player.grid_position[0] > COLS//2 and self.app.player.grid_position[1] < ROWS//2:
+                return vector(1, ROWS-2)
+            if self.app.player.grid_position[0] < COLS//2 and self.app.player.grid_position[1] > ROWS//2:
+                return vector(COLS-2, 1)
             else:
-                return vec(COLS-2, ROWS-2)
+                return vector(COLS-2, ROWS-2)
 
     def time_to_move(self):
         """"Checks whether it's okay to change direction, to stay in grid"""
-        if int(self.pix_pos.x+TOP_BOTTOM_MARGIN//2) % self.app.cell_width == 0:
-            if self.direction == vec(STEP,0) or self.direction == vec(-STEP,0) or self.direction == vec(0,0):
+        if int(self.pixel_position.x+TOP_BOTTOM_MARGIN//2) % self.app.cell_width == 0:
+            if self.direction == vector(STEP,0) or self.direction == vector(-STEP,0) or self.direction == vector(0,0):
                 return True
-        if int(self.pix_pos.y+TOP_BOTTOM_MARGIN//2) % self.app.cell_height == 0:
-            if self.direction == vec(0,STEP) or self.direction == vec(0,-STEP) or self.direction == vec(0,0):
+        if int(self.pixel_position.y+TOP_BOTTOM_MARGIN//2) % self.app.cell_height == 0:
+            if self.direction == vector(0,STEP) or self.direction == vector(0,-STEP) or self.direction == vector(0,0):
                 return True
         return False
 
@@ -76,12 +71,12 @@ class Enemy:
 
     def get_path_direction(self, target):
         next_cell = self.find_next_cell_in_path(target)
-        xdir = next_cell[0] - self.grid_pos[0]
-        ydir = next_cell[1] - self.grid_pos[1]
-        return vec(xdir, ydir)
+        xdir = next_cell[0] - self.grid_position[0]
+        ydir = next_cell[1] - self.grid_position[1]
+        return vector(xdir, ydir)
 
     def find_next_cell_in_path(self, target):
-        path = self.BFS([int(self.grid_pos.x), int(self.grid_pos.y)], [int(self.target[0]), int(self.target[1])])
+        path = self.BFS([int(self.grid_position.x), int(self.grid_position.y)], [int(self.target[0]), int(self.target[1])])
         return path[1]
 
     def BFS(self, start, target):
@@ -127,15 +122,10 @@ class Enemy:
                 x_dir, y_dir = -1,0
             else:
                 x_dir, y_dir = 0,-1
-            next_pos = vec(self.grid_pos.x + x_dir, self.grid_pos.y + y_dir)
+            next_pos = vector(self.grid_position.x + x_dir, self.grid_position.y + y_dir)
             if next_pos not in self.app.walls:
                 break
-        return vec(x_dir, y_dir)
-            
-
-    def get_pix_pos(self):
-        """Gets pixel position based on initial grid position, passed when creating new instance"""
-        return vec((self.grid_pos.x * self.app.cell_width) + TOP_BOTTOM_MARGIN//2+self.app.cell_width/2, (self.grid_pos.y * self.app.cell_height) + TOP_BOTTOM_MARGIN//2 + self.app.cell_height//2)
+        return vector(x_dir, y_dir)
 
     def set_color(self):
         if self.number == 0:
