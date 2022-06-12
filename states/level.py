@@ -27,30 +27,11 @@ class Level(State):
         for idx, pos in enumerate(self.e_pos):
             self.enemies.append(Enemy(self.app, self, vector(pos), idx))
 
-    def load(self):
-        self.background = pygame.image.load('maze.png')
-        self.background = pygame.transform.scale(self.background, (MAZE_WIDTH, MAZE_HEIGHT))
 
-        # Opening walls file and creating collision map
-        with open("walls.txt", "r") as file:
-            for yidx, line in enumerate(file):
-                for xidx, char in enumerate(line):
-                    if char == "1":
-                        self.walls.append(vector(xidx, yidx))
-                    elif char == "C":
-                        self.coins.append(vector(xidx, yidx))
-                    elif char == "P":
-                        self.p_pos = vector(xidx, yidx)
-                    elif char in ("2", "3", "4", "5"):
-                        self.e_pos.append([xidx,yidx])
-                    elif char == "B":
-                        pygame.draw.rect(self.background, BLACK, (xidx*CELL_WIDTH, yidx*CELL_HEIGHT, CELL_WIDTH, CELL_HEIGHT))
-
-    
     def events(self):
         for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                self.running = False
+            if event.type == pygame.QUIT or event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
+                self.app.running = False
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_LEFT:
                     self.player.move(vector(-1,0))
@@ -86,6 +67,27 @@ class Level(State):
         for enemy in self.enemies:
             enemy.draw()
         pygame.display.update()
+
+
+    def load(self):
+        self.background = pygame.image.load('maze.png')
+        self.background = pygame.transform.scale(self.background, (MAZE_WIDTH, MAZE_HEIGHT))
+
+        # Opening walls file and creating collision map
+        with open("walls.txt", "r") as file:
+            for yidx, line in enumerate(file):
+                for xidx, char in enumerate(line):
+                    if char == "1":
+                        self.walls.append(vector(xidx, yidx))
+                    elif char == "C":
+                        self.coins.append(vector(xidx, yidx))
+                    elif char == "P":
+                        self.p_pos = vector(xidx, yidx)
+                    elif char in ("2", "3", "4", "5"):
+                        self.e_pos.append([xidx,yidx])
+                    elif char == "B":
+                        pygame.draw.rect(self.background, BLACK, (xidx*CELL_WIDTH, yidx*CELL_HEIGHT, CELL_WIDTH, CELL_HEIGHT))
+
 
     def remove_life(self):
         self.player.lives -= 1

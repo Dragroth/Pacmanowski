@@ -9,7 +9,7 @@ class Menu(State):
     
     def events(self):
         for event in pygame.event.get():
-            if event.type == pygame.QUIT:
+            if event.type == pygame.QUIT or event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
                 self.app.running = False
             if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
                 self.change_state = "Level"
