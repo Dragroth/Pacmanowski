@@ -16,11 +16,13 @@ class Menu(State):
     
     def events(self):
         for event in pygame.event.get():
+            # If the player clicks escape key we exit
             if event.type == pygame.QUIT or event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
                 self.app.running = False
-            if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
+            # If the player clicks space we run currently selected option
+            if event.type == pygame.KEYDOWN and (event.key == pygame.K_SPACE or event.key == pygame.K_RETURN):
                 self.functions[self.selected]()
-                # self.change_state = "Level"
+            # Changing selected option
             if event.type == pygame.KEYDOWN and event.key == pygame.K_DOWN:
                 self.selected = (self.selected + 1) % len(self.buttons)
             if event.type == pygame.KEYDOWN and event.key == pygame.K_UP:
