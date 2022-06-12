@@ -20,6 +20,8 @@ class App:
         # The game is based on states, to decide which fragment of code should be run
         self.running = True
         self.state = Menu(self)
+
+        self.current_score = 0
         
     def run(self):
         while self.running:

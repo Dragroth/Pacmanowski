@@ -10,7 +10,7 @@ vector = pygame.math.Vector2
 class Level(State):
     def __init__(self, app):
         super().__init__(app)
-
+        pygame.mixer.music.stop()
 
         self.walls = []
         self.coins = []
@@ -61,7 +61,7 @@ class Level(State):
         self.draw_coins()
         if DEBUG_MODE:
             self.draw_grid()
-        self.app.draw_text(f"CURRENT SCORE: {self.player.current_score}", [60, 0], 18, WHITE, START_FONT)
+        self.app.draw_text(f"CURRENT SCORE: {self.app.current_score}", [60, 0], 18, WHITE, START_FONT)
         self.app.draw_text(f"HIGH SCORE: {0}", [WIDTH//2+60, 0], 18, WHITE, START_FONT)
         self.player.draw()
         for enemy in self.enemies:
@@ -70,11 +70,11 @@ class Level(State):
 
 
     def load(self):
-        self.background = pygame.image.load('maze.png')
+        self.background = pygame.image.load('assets/maze.png')
         self.background = pygame.transform.scale(self.background, (MAZE_WIDTH, MAZE_HEIGHT))
 
         # Opening walls file and creating collision map
-        with open("walls.txt", "r") as file:
+        with open("assets/walls.txt", "r") as file:
             for yidx, line in enumerate(file):
                 for xidx, char in enumerate(line):
                     if char == "1":

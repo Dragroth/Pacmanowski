@@ -9,9 +9,8 @@ class Player(Entity):
         super().__init__(app, level, init_position)
         self.stored_direction = None
         self.stored_stored_direction = None
-
+        # self.eat_sound = pygame.mixer.Sound("assets/eat.wav")
         self.able_to_move = True
-        self.current_score = 0
         self.speed = 2
         self.lives = 1
 
@@ -56,7 +55,8 @@ class Player(Entity):
 
     def eat_coin(self):
         self.level.coins.remove(self.grid_position)
-        self.current_score += 1
+        self.app.current_score += 1
+        # self.eat_sound.play()
 
     def can_move(self, direction):
         """Check if there is wall in the passed direction"""

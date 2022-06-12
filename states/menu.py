@@ -1,4 +1,3 @@
-import enum
 import pygame
 
 from settings import *
@@ -8,11 +7,14 @@ class Menu(State):
 
     def __init__(self, app):
         super().__init__(app)
+        pygame.mixer.music.load("assets/dziki_zachod.wav")
+        pygame.mixer.music.play()
         self.button_width = 200
         self.button_height = 50
         self.buttons = ("start", "options", "exit")
         self.functions = (self.start, self.options, self.exit)
         self.selected = 0
+        self.app.current_score = 0
     
     def events(self):
         for event in pygame.event.get():

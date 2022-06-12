@@ -6,6 +6,9 @@ from states.state import *
 class Game_over(State):
     def __init__(self, app):
         super().__init__(app)
+        with open("scores.txt", "a") as fa:
+            fa.write(str(self.app.current_score) + "\n")
+            
 
     def events(self):
         for event in pygame.event.get():
@@ -19,9 +22,11 @@ class Game_over(State):
 
     def draw(self):
         self.app.screen.fill(BLACK)
-        quit_text = "Press the escape button to QUIT"
-        again_text = "Press SPACEBAR to TRY AGAIN"
-        self.app.draw_text("GAME OVER", [WIDTH//2, 100], 42, RED, "arial", centered=True)
-        self.app.draw_text(again_text, [WIDTH//2, HEIGHT//2], 40, WHITE, "arial", centered=True)
-        self.app.draw_text(quit_text, [WIDTH//2, HEIGHT//1.5], 38, YELLOW, "arial", centered=True)
+        quit_text = "Press the ESCAPE to QUIT"
+        score_text = "YOUR SCORE: " + str(self.app.current_score)
+        again_text = "Press SPACEBAR to go back to main MENU"
+        self.app.draw_text("GAME OVER", [WIDTH//2, 100], 84, RED, "arial bold", centered=True)
+        self.app.draw_text(score_text, [WIDTH//2, 180], 42, WHITE, "arial", centered=True)
+        self.app.draw_text(again_text, [WIDTH//2, HEIGHT-150], 20, AQUAMARINE, "arial", centered=True)
+        self.app.draw_text(quit_text, [WIDTH//2, HEIGHT-50], 20, AQUAMARINE, "arial", centered=True)
         pygame.display.update()
