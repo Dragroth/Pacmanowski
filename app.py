@@ -42,7 +42,7 @@ class App:
 
 ######### HELP FUNCTIONS #########
 
-    def draw_text(self, message, pos, size, color, font_name, centered=False):
+    def draw_text(self, message, pos, size, color, font_name, centered=False) -> None:
         font = pygame.font.SysFont(font_name, size)
         text = font.render(message, True, color)
         text_size = text.get_size()

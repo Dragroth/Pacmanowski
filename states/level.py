@@ -113,5 +113,6 @@ class Level(State):
         for x in range(HEIGHT//CELL_HEIGHT):
             pygame.draw.line(self.background, GREY, (0, x*CELL_HEIGHT), (WIDTH, x*CELL_HEIGHT))
 
-        #for wall in self.walls:
-        #    pygame.draw.rect(self.background, RED, (wall.x * CELL_WIDTH, wall.y * CELL_HEIGHT, CELL_WIDTH, CELL_HEIGHT))
+        if PRINT_WALLS:
+            for wall in self.walls:
+                pygame.draw.rect(self.background, RED, (wall.x * CELL_WIDTH, wall.y * CELL_HEIGHT, CELL_WIDTH, CELL_HEIGHT))

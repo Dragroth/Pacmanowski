@@ -10,7 +10,10 @@ CELL_HEIGHT = MAZE_HEIGHT//ROWS
 
 FPS = 60
 STEP = 1
+
+
 DEBUG_MODE = False
+PRINT_WALLS = False
 
 # Colors 
 BLACK = (0,0,0)
