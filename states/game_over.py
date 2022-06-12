@@ -15,7 +15,7 @@ class Game_over(State):
                 self.change_state = "Menu"
     
     def update(self):
-        pass
+        ...
 
     def draw(self):
         self.app.screen.fill(BLACK)

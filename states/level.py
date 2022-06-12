@@ -31,7 +31,7 @@ class Level(State):
     def events(self):
         for event in pygame.event.get():
             if event.type == pygame.QUIT or event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
-                self.app.running = False
+                self.change_state = 'Menu'
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_LEFT:
                     self.player.move(vector(-1,0))
