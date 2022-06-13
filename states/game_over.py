@@ -6,6 +6,8 @@ from states.state import *
 class Game_over(State):
     def __init__(self, app):
         super().__init__(app)
+        self.fail_sound = pygame.mixer.Sound("assets/sounds/fail.wav")
+        self.fail_sound.play()
         with open("scores.txt", "a") as fa:
             fa.write(str(self.app.current_score) + "\n")
             
@@ -15,6 +17,7 @@ class Game_over(State):
             if event.type == pygame.QUIT or event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
                 self.app.running = False
             if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
+                self.fail_sound.stop()
                 self.change_state = "Menu"
     
     def update(self):

@@ -70,7 +70,7 @@ class Level(State):
 
 
     def load(self):
-        self.background = pygame.image.load('assets/maze.png')
+        self.background = pygame.image.load('assets/images/maze.png')
         self.background = pygame.transform.scale(self.background, (MAZE_WIDTH, MAZE_HEIGHT))
 
         # Opening walls file and creating collision map
@@ -104,7 +104,7 @@ class Level(State):
 
     def draw_coins(self):
         for coin in self.coins:
-            pygame.draw.circle(self.app.screen, WHITE, (int(coin.x * CELL_WIDTH+ CELL_WIDTH//2 + TOP_BOTTOM_MARGIN//2), int(coin.y * CELL_HEIGHT  + CELL_HEIGHT//2 + TOP_BOTTOM_MARGIN//2)), 5)
+            pygame.draw.circle(self.app.screen, WHITE, (int(coin.x * CELL_WIDTH+ CELL_WIDTH//2 + TOP_BOTTOM_MARGIN//2), int(coin.y * CELL_HEIGHT  + CELL_HEIGHT//2 + TOP_BOTTOM_MARGIN//2)), 4)
 
     def draw_grid(self):
         for x in range(WIDTH//CELL_WIDTH):

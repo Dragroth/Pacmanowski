@@ -1,3 +1,5 @@
+import os, pygame
+
 WIDTH, HEIGHT = 610, 670
 TOP_BOTTOM_MARGIN = 50
 MAZE_WIDTH, MAZE_HEIGHT = WIDTH-TOP_BOTTOM_MARGIN, HEIGHT-TOP_BOTTOM_MARGIN
@@ -31,3 +33,22 @@ PLAYER_COLOR = YELLOW
 
 # Fonts
 START_FONT = 'arial black'
+
+
+
+path = os.path.join(os.pardir, 'Pacmanowski/assets/images')
+file_names = sorted(os.listdir(path))
+
+
+# Animations
+print(file_names)
+for file_name in file_names:
+    image_name = file_name[:-4]
+    globals()[image_name] = pygame.image.load(os.path.join(path, file_name))
+
+
+PLAYER_WALK_LIST_R = [PLAYER_STAND, PLAYER_WALK_R_1, PLAYER_WALK_R_2, PLAYER_WALK_R_1]
+PLAYER_WALK_LIST_L = [PLAYER_STAND, PLAYER_WALK_L_1, PLAYER_WALK_L_2, PLAYER_WALK_L_1]
+PLAYER_WALK_LIST_T = [PLAYER_STAND, PLAYER_WALK_T_1, PLAYER_WALK_T_2, PLAYER_WALK_T_1]
+PLAYER_WALK_LIST_B = [PLAYER_STAND, PLAYER_WALK_B_1, PLAYER_WALK_B_2, PLAYER_WALK_B_1]
+PLAYER_STAND_LIST = [PLAYER_STAND]

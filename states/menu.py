@@ -7,8 +7,8 @@ class Menu(State):
 
     def __init__(self, app):
         super().__init__(app)
-        pygame.mixer.music.load("assets/dziki_zachod.wav")
-        pygame.mixer.music.play()
+        pygame.mixer.music.load("assets/sounds/dziki_zachod.wav")
+        pygame.mixer.music.play(loops=-1)
         self.button_width = 200
         self.button_height = 50
 
@@ -62,7 +62,7 @@ class Menu(State):
                 # Drawing rectangle based on created tuple
                 pygame.draw.rect(self.app.screen, color, button)
                 # Drawing text inside of the rectangle
-                self.app.draw_text(button_text.upper(), [WIDTH//2, 80*idx+120 + self.button_height//2], 26, WHITE, START_FONT, True)
+                self.app.draw_text(button_text.upper(), [WIDTH//2, 80*idx+120 + self.button_height//2], 24, WHITE, START_FONT, True)
 
         pygame.display.update()
 
