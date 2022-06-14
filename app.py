@@ -2,26 +2,32 @@ import pygame, sys
 from settings import *
 from entities.player import *
 from entities.enemy import *
-from states.menu import *
 from states.level import *
 from states.game_over import *
+from states.main_menu import *
+from states.options import *
+from states.high_scores import *
 
 pygame.init()
 
 # Used to change states in one place, instead of importing stuff and complicating things
-states = {'Menu': Menu, 'Level': Level, 'Game_over': Game_over}
+states = {'Main_menu': Main_menu, 'Options': Options, "High_scores": High_scores , 'Level': Level, 'Game_over': Game_over}
 vector = pygame.math.Vector2
 
 class App:
     def __init__(self):
         self.screen = pygame.display.set_mode((WIDTH, HEIGHT))
         self.clock = pygame.time.Clock()
-        
+
         self.volume = 1
+        pygame.mixer.music.load("assets/sounds/dziki_zachod.wav")
+        pygame.mixer.music.play(loops=-1)
+        pygame.mixer.music.set_volume(self.volume)
         
+
         # The game is based on states, to decide which fragment of code should be run
         self.running = True
-        self.state = Menu(self)
+        self.state = Main_menu(self)
 
         self.current_score = 0
         

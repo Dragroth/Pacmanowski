@@ -10,7 +10,7 @@ vector = pygame.math.Vector2
 class Level(State):
     def __init__(self, app):
         super().__init__(app)
-        pygame.mixer.music.stop()
+        pygame.mixer.music.pause()
 
         self.walls = []
         self.coins = []
@@ -27,11 +27,10 @@ class Level(State):
         for idx, pos in enumerate(self.e_pos):
             self.enemies.append(Enemy(self.app, self, vector(pos), idx))
 
-
     def events(self):
         for event in pygame.event.get():
             if event.type == pygame.QUIT or event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
-                self.change_state = 'Menu'
+                self.change_state = 'Main_menu'
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_LEFT:
                     self.player.move(vector(-1,0))
