@@ -19,7 +19,12 @@ class App:
         self.screen = pygame.display.set_mode((WIDTH, HEIGHT))
         self.clock = pygame.time.Clock()
 
-        self.volume = 1
+        with open("settings.txt", "r") as fr:
+            temp = fr.read()
+            if temp == "":
+                temp = 1
+            self.volume = float(temp)
+
         pygame.mixer.music.load("assets/sounds/dziki_zachod.wav")
         pygame.mixer.music.play(loops=-1)
         pygame.mixer.music.set_volume(self.volume)

@@ -34,4 +34,7 @@ class Options(Menus):
             self.app.volume = 1
         else:
             self.app.volume = 0
+
+        with open("settings.txt", "w") as fw:
+            fw.write(str(self.app.volume))
         pygame.mixer.music.set_volume(self.app.volume)
