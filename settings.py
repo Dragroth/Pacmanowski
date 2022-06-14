@@ -41,7 +41,6 @@ file_names = sorted(os.listdir(path))
 
 
 # Animations
-print(file_names)
 for file_name in file_names:
     image_name = file_name[:-4]
     globals()[image_name] = pygame.image.load(os.path.join(path, file_name))

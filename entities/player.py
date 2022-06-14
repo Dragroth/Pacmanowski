@@ -18,7 +18,7 @@ class Player(Entity):
 
         self.able_to_move = False
         self.speed = 2
-        self.lives = 1
+        self.lives = 3
 
     def update(self):
         # If everything is fine, we move the player in direction it's facing in pixels
