@@ -19,7 +19,7 @@ class Menu(State):
         self.selected = 0
 
         self.main_menu()
-        self.high_scores = []
+        self.high_scores_list = []
         
         self.app.current_score = 0
     
@@ -61,8 +61,8 @@ class Menu(State):
                 self.app.draw_text(button_text.upper(), [WIDTH//2, 80*idx+120 + self.button_height//2], 24, WHITE, START_FONT, True)
 
 
-                for idx, score in enumerate(self.high_scores[:10]):
-                    print(idx, score)
+            for idx, score in enumerate(self.high_scores_list[:10]):
+                self.app.draw_text(str(idx+1) + ": " + str(score), [WIDTH//2, 40*idx+180 + self.button_height//2], 18, WHITE, START_FONT, True)
 
 
         else:    
@@ -111,10 +111,10 @@ class Menu(State):
         self.functions = [self.go_back]
 
         with open("scores.txt", "r") as fr:
-            high_scores = fr.read().splitlines()
-            for i in range(0, len(self.high_scores)):
-                self.high_scores[i] = int(self.high_scores[i])
-            self.high_scores.sort(reverse=True)
+            self.high_scores_list = fr.read().splitlines()
+            for i in range(0, len(self.high_scores_list)):
+                self.high_scores_list[i] = int(self.high_scores_list[i])
+            self.high_scores_list.sort(reverse=True)
 
         
     def go_back(self):
