@@ -17,6 +17,8 @@ class App:
         self.screen = pygame.display.set_mode((WIDTH, HEIGHT))
         self.clock = pygame.time.Clock()
         
+        self.volume = 1
+        
         # The game is based on states, to decide which fragment of code should be run
         self.running = True
         self.state = Menu(self)

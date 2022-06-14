@@ -9,7 +9,10 @@ class Player(Entity):
         super().__init__(app, level, init_position)
         self.stored_direction = None
         self.direction = vector(0,1)
+
         self.eat_sound = pygame.mixer.Sound("assets/sounds/eat.wav")
+        self.eat_sound.set_volume(self.app.volume)
+        
         self.image = PLAYER_STAND_LIST
         self._count = 0
 

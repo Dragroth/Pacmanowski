@@ -7,8 +7,12 @@ class Menu(State):
 
     def __init__(self, app):
         super().__init__(app)
+        self.app = app
+
         pygame.mixer.music.load("assets/sounds/dziki_zachod.wav")
         pygame.mixer.music.play(loops=-1)
+        pygame.mixer.music.set_volume(self.app.volume)
+
         self.button_width = 200
         self.button_height = 50
 
@@ -64,6 +68,25 @@ class Menu(State):
             for idx, score in enumerate(self.high_scores_list[:10]):
                 self.app.draw_text(str(idx+1) + ": " + str(score), [WIDTH//2, 40*idx+180 + self.button_height//2], 18, WHITE, START_FONT, True)
 
+        elif self.menu == "options":
+            self.app.draw_text("OPTIONS", [WIDTH//2, 50], 48, WHITE, START_FONT, True)
+            for idx, button_text in enumerate(self.buttons):
+                button = (WIDTH//2-self.button_width//2, 80*idx+120, self.button_width, self.button_height)
+
+                if idx == self.selected:
+                    color = LIGHTGREY
+                else:
+                    color = GREY
+
+                if idx == 1:
+                    if self.app.volume == 1:
+                        color = GREEN
+                    else:
+                        color = RED
+
+                pygame.draw.rect(self.app.screen, color, button)
+                # Drawing text inside of the rectangle
+                self.app.draw_text(button_text.upper(), [WIDTH//2, 80*idx+120 + self.button_height//2], 24, WHITE, START_FONT, True)
 
         else:    
             # Drawing main menu's top texts
@@ -101,8 +124,8 @@ class Menu(State):
     def options(self):
         self.selected = 0
         self.menu = "options"
-        self.buttons = ["go back"]
-        self.functions = [self.go_back]
+        self.buttons = ["go back", "mute/unmute"]
+        self.functions = [self.go_back, self.mute]
 
     def high_scores(self):
         self.selected = 0
@@ -116,9 +139,15 @@ class Menu(State):
                 self.high_scores_list[i] = int(self.high_scores_list[i])
             self.high_scores_list.sort(reverse=True)
 
-        
     def go_back(self):
         self.selected = 0
         if self.menu == "main_menu":
             self.app.running = False
         self.main_menu()
+
+    def mute(self):
+        if self.app.volume == 0:
+            self.app.volume = 1
+        else:
+            self.app.volume = 0
+        pygame.mixer.music.set_volume(self.app.volume)
