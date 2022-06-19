@@ -46,6 +46,12 @@ for file_name in file_names:
     globals()[image_name] = pygame.image.load(os.path.join(path, file_name))
 
 
+# Music
+
+MAIN_MENU_MUSIC = ["assets/sounds/budowa.wav", "assets/sounds/teleportki.wav", "assets/sounds/dziki_zachod.wav", "assets/sounds/miasto.wav"]
+LEVEL_MUSIC = ["assets/sounds/podziemia.wav", "assets/sounds/lotnasmoku.wav", "assets/sounds/lotnamiotle.wav"]
+
+
 PLAYER_WALK_LIST_R = [PLAYER_STAND, PLAYER_WALK_R_1, PLAYER_WALK_R_2, PLAYER_WALK_R_1]
 PLAYER_WALK_LIST_L = [PLAYER_STAND, PLAYER_WALK_L_1, PLAYER_WALK_L_2, PLAYER_WALK_L_1]
 PLAYER_WALK_LIST_T = [PLAYER_STAND, PLAYER_WALK_T_1, PLAYER_WALK_T_2, PLAYER_WALK_T_1]

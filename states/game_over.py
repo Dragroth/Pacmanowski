@@ -21,7 +21,7 @@ class Game_over(State):
                 self.app.running = False
             if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
                 self.fail_sound.stop()
-                pygame.mixer.music.unpause()
+                self.app.load_music()
                 self.change_state = "Main_menu"
     
     def update(self):

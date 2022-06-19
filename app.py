@@ -1,4 +1,5 @@
 import pygame, sys
+from random import choice
 from settings import *
 from entities.player import *
 from entities.enemy import *
@@ -25,10 +26,7 @@ class App:
                 temp = 1
             self.volume = float(temp)
 
-        pygame.mixer.music.load("assets/sounds/dziki_zachod.wav")
-        pygame.mixer.music.play(loops=-1)
-        pygame.mixer.music.set_volume(self.volume)
-        
+        self.load_music()
 
         # The game is based on states, to decide which fragment of code should be run
         self.running = True
@@ -63,3 +61,9 @@ class App:
             pos[0] = pos[0]-text_size[0]//2
             pos[1] = pos[1]-text_size[1]//2
         self.screen.blit(text, pos)
+
+    def load_music(self):
+        pygame.mixer.music.load(choice(MAIN_MENU_MUSIC))
+        pygame.mixer.music.play(loops=-1)
+        pygame.mixer.music.set_volume(self.volume)
+        

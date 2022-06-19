@@ -55,7 +55,7 @@ class Player(Entity):
         # Drawing player model
         # pygame.draw.circle(self.app.screen, PLAYER_COLOR, (int(self.pixel_position.x), int(self.pixel_position.y)), CELL_WIDTH//2-2)
     
-        temp = self.image[self._count//(2*len(self.image))]
+        temp = self.image[self._count//(2*len(self.image))-1]
         self._count = (self._count + 1) % (8*len(self.image))
         
         self.app.screen.blit(temp, (int(self.pixel_position.x) - CELL_WIDTH//2+2, int(self.pixel_position.y) - CELL_HEIGHT//2+2))

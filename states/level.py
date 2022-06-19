@@ -1,5 +1,6 @@
 import pygame
 
+from random import choice
 from entities.enemy import *
 from entities.player import *
 from states.state import *
@@ -10,7 +11,8 @@ vector = pygame.math.Vector2
 class Level(State):
     def __init__(self, app):
         super().__init__(app)
-        pygame.mixer.music.pause()
+        pygame.mixer.music.stop()
+        self.load_music()
 
         self.walls = []
         self.coins = []
@@ -30,6 +32,7 @@ class Level(State):
     def events(self):
         for event in pygame.event.get():
             if event.type == pygame.QUIT or event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
+                self.app.load_music()
                 self.change_state = 'Main_menu'
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_LEFT:
@@ -115,3 +118,8 @@ class Level(State):
         if PRINT_WALLS:
             for wall in self.walls:
                 pygame.draw.rect(self.background, RED, (wall.x * CELL_WIDTH, wall.y * CELL_HEIGHT, CELL_WIDTH, CELL_HEIGHT))
+
+    def load_music(self):
+        pygame.mixer.music.load(choice(LEVEL_MUSIC))
+        pygame.mixer.music.play(loops=-1)
+        pygame.mixer.music.set_volume(self.app.volume)
