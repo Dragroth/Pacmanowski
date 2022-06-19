@@ -16,6 +16,7 @@ class Level(State):
 
         self.walls = []
         self.coins = []
+        self.fruits = []
         self.enemies = []
         # Stores position of enemies
         self.e_pos = []
@@ -61,6 +62,7 @@ class Level(State):
         self.app.screen.fill(BLACK)
         self.app.screen.blit(self.background, (TOP_BOTTOM_MARGIN//2, TOP_BOTTOM_MARGIN//2))
         self.draw_coins()
+        self.draw_fruits()
         if DEBUG_MODE:
             self.draw_grid()
         self.app.draw_text(f"CURRENT SCORE: {self.app.current_score}", [60, 0], 18, WHITE, START_FONT)
@@ -89,6 +91,8 @@ class Level(State):
                         self.e_pos.append([xidx,yidx])
                     elif char == "B":
                         pygame.draw.rect(self.background, BLACK, (xidx*CELL_WIDTH, yidx*CELL_HEIGHT, CELL_WIDTH, CELL_HEIGHT))
+                    elif char == "F":
+                        self.fruits.append(vector(xidx, yidx))
 
 
     def remove_life(self):
@@ -107,6 +111,10 @@ class Level(State):
     def draw_coins(self):
         for coin in self.coins:
             pygame.draw.circle(self.app.screen, WHITE, (int(coin.x * CELL_WIDTH+ CELL_WIDTH//2 + TOP_BOTTOM_MARGIN//2), int(coin.y * CELL_HEIGHT  + CELL_HEIGHT//2 + TOP_BOTTOM_MARGIN//2)), 4)
+
+    def draw_fruits(self):
+        for fruit in self.fruits:
+            pygame.draw.circle(self.app.screen, WHITE, (int(fruit.x * CELL_WIDTH+ CELL_WIDTH//2 + TOP_BOTTOM_MARGIN//2), int(fruit.y * CELL_HEIGHT  + CELL_HEIGHT//2 + TOP_BOTTOM_MARGIN//2)), 7)
 
     def draw_grid(self):
         for x in range(WIDTH//CELL_WIDTH):

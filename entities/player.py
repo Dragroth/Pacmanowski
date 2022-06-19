@@ -11,6 +11,8 @@ class Player(Entity):
         self.direction = vector(0,1)
 
         self.eat_sound = pygame.mixer.Sound("assets/sounds/eat.wav")
+        self.fruit_eat_sound = pygame.mixer.Sound("assets/sounds/fruit_eat.wav")
+        self.fruit_eat_sound.set_volume(self.app.volume)
         self.eat_sound.set_volume(self.app.volume)
         
         self.image = PLAYER_STAND_LIST
@@ -48,8 +50,11 @@ class Player(Entity):
 
         super().update()
 
-        if self.on_coin():
+        if self.on_item(self.level.coins):
             self.eat_coin()
+
+        if self.on_item(self.level.fruits):
+            self.eat_fruit()
 
     def draw(self):
         # Drawing player model
@@ -69,8 +74,8 @@ class Player(Entity):
         if DEBUG_MODE:
             pygame.draw.rect(self.app.screen, RED, (self.grid_position[0]*CELL_WIDTH+TOP_BOTTOM_MARGIN//2, self.grid_position[1] * CELL_HEIGHT + TOP_BOTTOM_MARGIN//2, CELL_WIDTH, CELL_HEIGHT), 1)
 
-    def on_coin(self):
-        if self.grid_position in self.level.coins:
+    def on_item(self, item):
+        if self.grid_position in item:
             if int(self.pixel_position.x+TOP_BOTTOM_MARGIN//2) % CELL_WIDTH == 0:
                 if self.direction == vector(STEP,0) or self.direction == vector(-STEP,0):
                     return True
@@ -79,10 +84,16 @@ class Player(Entity):
                     return True
         return False
 
+
     def eat_coin(self):
         self.level.coins.remove(self.grid_position)
         self.app.current_score += 1
         self.eat_sound.play()
+
+    def eat_fruit(self):
+        self.level.fruits.remove(self.grid_position)
+        self.app.current_score += 2
+        self.fruit_eat_sound.play()
 
     def can_move(self, direction):
         """Check if there is wall in the passed direction"""
