@@ -6,7 +6,7 @@ class Menus(State):
     def __init__(self, app):
         super().__init__(app)
 
-        self.button_width = 200
+        self.button_width = 220
         self.button_height = 50
 
         self.buttons = []
@@ -19,7 +19,7 @@ class Menus(State):
             # If the player clicks escape key we exit
             if event.type == pygame.QUIT or event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
                 self.go_back()
-            # If the player clicks space we run currently selected option
+            # If the player clicks space o enter we run currently selected option
             if event.type == pygame.KEYDOWN and (event.key == pygame.K_SPACE or event.key == pygame.K_RETURN):
                 self.functions[self.selected]()
             # Changing selected option

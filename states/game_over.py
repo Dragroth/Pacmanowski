@@ -8,6 +8,7 @@ class Game_over(State):
         super().__init__(app)
 
         self.fail_sound = pygame.mixer.Sound("assets/sounds/fail.wav")
+        pygame.mixer.music.stop()
         self.fail_sound.play()
         self.fail_sound.set_volume(self.app.volume)
 

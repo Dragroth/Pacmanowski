@@ -1,5 +1,6 @@
 import pygame, sys
 from random import choice
+
 from settings import *
 from entities.player import *
 from entities.enemy import *

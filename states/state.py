@@ -1,4 +1,4 @@
-import pygame, abc
+import abc
 
 from settings import *
 from app import *
