@@ -51,18 +51,6 @@ class App:
         pygame.quit()
         sys.exit()
 
-
-######### HELP FUNCTIONS #########
-
-    def draw_text(self, message, pos, size, color, font_name, centered=False) -> None:
-        font = pygame.font.SysFont(font_name, size)
-        text = font.render(message, True, color)
-        text_size = text.get_size()
-        if centered:
-            pos[0] = pos[0]-text_size[0]//2
-            pos[1] = pos[1]-text_size[1]//2
-        self.screen.blit(text, pos)
-
     def load_music(self):
         pygame.mixer.music.load(choice(MAIN_MENU_MUSIC))
         pygame.mixer.music.play(loops=-1)

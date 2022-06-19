@@ -33,8 +33,8 @@ class Game_over(State):
         quit_text = "Press the ESCAPE to QUIT"
         score_text = "YOUR SCORE: " + str(self.app.current_score)
         again_text = "Press SPACEBAR to go back to main MENU"
-        self.app.draw_text("GAME OVER", [WIDTH//2, 100], 84, RED, "arial bold", centered=True)
-        self.app.draw_text(score_text, [WIDTH//2, 180], 42, WHITE, "arial", centered=True)
-        self.app.draw_text(again_text, [WIDTH//2, HEIGHT-150], 20, AQUAMARINE, "arial", centered=True)
-        self.app.draw_text(quit_text, [WIDTH//2, HEIGHT-50], 20, AQUAMARINE, "arial", centered=True)
+        self.draw_text(self.app.screen, "GAME OVER", [WIDTH//2, 100], 84, RED, "arial bold", centered=True)
+        self.draw_text(self.app.screen, score_text, [WIDTH//2, 180], 42, WHITE, "arial", centered=True)
+        self.draw_text(self.app.screen, again_text, [WIDTH//2, HEIGHT-150], 20, AQUAMARINE, "arial", centered=True)
+        self.draw_text(self.app.screen, quit_text, [WIDTH//2, HEIGHT-50], 20, AQUAMARINE, "arial", centered=True)
         pygame.display.update()

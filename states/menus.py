@@ -33,6 +33,7 @@ class Menus(State):
 
     def draw(self):
         self.app.screen.fill(BLACK)
+        self.draw_text(self.app.screen, "PACMANOWSKI v1, made by Gabriel Król with Pygame", [11, HEIGHT-18], 9, LIGHTGREY, START_FONT, False)
 
     def go_back(self):
         self.change_state = "Main_menu"

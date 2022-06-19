@@ -65,8 +65,8 @@ class Level(State):
         self.draw_fruits()
         if DEBUG_MODE:
             self.draw_grid()
-        self.app.draw_text(f"CURRENT SCORE: {self.app.current_score}", [60, 0], 18, WHITE, START_FONT)
-        self.app.draw_text(f"HIGH SCORE: {0}", [WIDTH//2+60, 0], 18, WHITE, START_FONT)
+        self.draw_text(self.app.screen, f"CURRENT SCORE: {self.app.current_score}", [60, 0], 18, WHITE, START_FONT)
+        self.draw_text(self.app.screen, f"HIGH SCORE: {0}", [WIDTH//2+60, 0], 18, WHITE, START_FONT)
         self.player.draw()
         for enemy in self.enemies:
             enemy.draw()

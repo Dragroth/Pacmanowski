@@ -20,7 +20,7 @@ class High_scores(Menus):
     def draw(self):
         super().draw()
 
-        self.app.draw_text("HIGH SCORES", [WIDTH//2, 50], 48, WHITE, START_FONT, True)
+        self.draw_text(self.app.screen, "HIGH SCORES", [WIDTH//2, 50], 48, WHITE, START_FONT, True)
         for idx, button_text in enumerate(self.buttons):
             # Creating tuple that will be used to initiate new rect object
             button = (WIDTH//2-self.button_width//2, 80*idx+120, self.button_width, self.button_height)
@@ -32,9 +32,9 @@ class High_scores(Menus):
             # Drawing rectangle based on created tuple
             pygame.draw.rect(self.app.screen, color, button)
             # Drawing text inside of the rectangle
-            self.app.draw_text(button_text.upper(), [WIDTH//2, 80*idx+120 + self.button_height//2], 24, WHITE, START_FONT, True)
+            self.draw_text(self.app.screen, button_text.upper(), [WIDTH//2, 80*idx+120 + self.button_height//2], 24, WHITE, START_FONT, True)
 
         for idx, score in enumerate(self.high_scores_list[:10]):
-                self.app.draw_text(str(idx+1) + ": " + str(score), [WIDTH//2, 40*idx+180 + self.button_height//2], 18, WHITE, START_FONT, True)
+                self.draw_text(self.app.screen, str(idx+1) + ": " + str(score) + " POINTS", [WIDTH//2, 40*idx+180 + self.button_height//2], 18, WHITE, START_FONT, True)
 
         pygame.display.update()
