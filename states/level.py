@@ -14,6 +14,8 @@ class Level(State):
         pygame.mixer.music.stop()
         self.load_music()
 
+        pygame.time.set_timer(pygame.USEREVENT, 1000)
+
         self.walls = []
         self.coins = []
         self.fruits = []
@@ -32,6 +34,10 @@ class Level(State):
 
     def events(self):
         for event in pygame.event.get():
+            if event.type == pygame.USEREVENT:
+                if self.player.beast_mode > 0:
+                    self.player.beast_mode -= 1
+                    print(self.player.beast_mode)
             if event.type == pygame.QUIT or event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
                 self.app.load_music()
                 self.change_state = 'Main_menu'
@@ -51,10 +57,18 @@ class Level(State):
         for enemy in self.enemies:
             enemy.update()
 
+        if self.player.beast_mode == 0:
+            self.stop_beast_mode()
+
         
+        # Collision occurs
         for enemy in self.enemies:
             if enemy.grid_position == self.player.grid_position:
-                self.remove_life()
+                if self.player.beast_mode > 0 and enemy.color == BLUE:
+                    enemy.get_eaten()
+                    self.app.current_score += 5
+                else:
+                    self.remove_life()
 
 
 
@@ -104,9 +118,7 @@ class Level(State):
             self.player.pixel_position = self.player.get_pixel_position()
             self.player.direction *= 0
             for enemy in self.enemies:
-                enemy.grid_position = vector(enemy.starting_position)
-                enemy.pixel_position = enemy.get_pixel_position()
-                enemy.direction *= 0
+                enemy.get_eaten()
 
     def draw_coins(self):
         for coin in self.coins:
@@ -131,3 +143,18 @@ class Level(State):
         pygame.mixer.music.load(choice(LEVEL_MUSIC))
         pygame.mixer.music.play(loops=-1)
         pygame.mixer.music.set_volume(self.app.volume)
+
+    def start_beast_mode(self):
+        if self.player.beast_mode > 0:
+            self.player.beast_mode += 3
+        else:
+            self.player.beast_mode = 5
+        for enemy in self.enemies:
+            enemy.set_personality(beast_mode=True)
+            enemy.set_color(beast_mode=True)
+
+
+    def stop_beast_mode(self):
+        for enemy in self.enemies:
+            enemy.set_personality(beast_mode=False)
+            enemy.set_color(beast_mode=False)

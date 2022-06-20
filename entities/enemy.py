@@ -10,9 +10,10 @@ class Enemy(Entity):
         self.radius = CELL_WIDTH//2.3
         # Used to identify an enemy
         self.number = number
-        self.color = self.set_color()
+        self.set_color()
         # Used to allow different movement patterns in enemy
-        self.personality = self.set_personality()
+        self.personality = ""
+        self.set_personality()
         # Used as a place that an enemy will try to reach
         self.target = None
         self.speed = self.set_speed()
@@ -145,24 +146,35 @@ class Enemy(Entity):
                 break
         return vector(x_dir, y_dir)
 
-    def set_color(self):
+    def set_color(self, beast_mode = False):
         """Sets color based on enemy number"""
-        if self.number == 0:
-            return BLUE
+        if beast_mode:
+            self.color = BLUE
+        elif self.number == 0:
+            self.color = AQUAMARINE
         elif self.number == 1:
-            return YELLOW
+            self.color = YELLOW
         elif self.number == 2:
-            return RED
+            self.color = RED
         elif self.number == 3:
-            return ORANGE
+            self.color = ORANGE
 
-    def set_personality(self):
+    def set_personality(self, beast_mode = False):
         """Sets personality based on enemy number"""
-        if self.number == 0:
-            return "speedy"
+        if beast_mode:
+            self.personality = "scared"
+        elif self.number == 0:
+            self.personality = "speedy"
         elif self.number == 1:
-            return "slow"
+            self.personality = "slow"
         elif self.number == 2:
-            return "random"
+            self.personality = "random"
         else:
-            return "scared"
+            self.personality = "scared"
+
+    def get_eaten(self):
+        self.set_personality(beast_mode=False)
+        self.set_color(beast_mode=False)
+        self.grid_position = vector(self.starting_position)
+        self.pixel_position = self.get_pixel_position()
+        self.direction *= 0

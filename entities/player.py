@@ -18,6 +18,8 @@ class Player(Entity):
         self.image = PLAYER_STAND_LIST
         self._count = 0
 
+        self.beast_mode = 0
+
         self.able_to_move = False
         self.speed = 2
         self.lives = 3
@@ -60,7 +62,7 @@ class Player(Entity):
         # Drawing player model
         # pygame.draw.circle(self.app.screen, PLAYER_COLOR, (int(self.pixel_position.x), int(self.pixel_position.y)), CELL_WIDTH//2-2)
     
-        temp = self.image[self._count//(2*len(self.image))-1]
+        temp = self.image[self._count//(2*len(self.image))]
         self._count = (self._count + 1) % (8*len(self.image))
         
         self.app.screen.blit(temp, (int(self.pixel_position.x) - CELL_WIDTH//2+2, int(self.pixel_position.y) - CELL_HEIGHT//2+2))
@@ -94,6 +96,7 @@ class Player(Entity):
         self.level.fruits.remove(self.grid_position)
         self.app.current_score += 2
         self.fruit_eat_sound.play()
+        self.level.start_beast_mode()
 
     def can_move(self, direction):
         """Check if there is wall in the passed direction"""
